@@ -17,38 +17,36 @@ export const sceneAnims = {
 
 export const sheetAnims = {
     async flipClone(direction) {
-        const rotateY = `rotate3d(0, 1, 0, 180deg)`;
-        // Force rotation go the right way. You could also use gsap properties rotationX and -Y instead of transform
-        const rotateX = `rotate3d(1, 0, 0, -179.999deg)`;
-
         // Flip the clone in the outer div
         return new Promise(function (resolve, reject) {
-            gsap.to('#scene > div > div:last-child', {
+            const animOptions = {
                 transformOrigin: "99% 99%",
-                transform: direction === 'horizontal' ? rotateY : rotateX,
-                duration: 2.5,
+                duration: 1.5,
                 onComplete: resolve
-            })
+            };
+
+            if (direction === 'horizontal') {
+                animOptions.rotateY = 180;
+            } else {
+                animOptions.rotateX = -180;
+            }
+
+            gsap.to('#scene > .container > div:last-child', animOptions);
         })
     },
     moveToLeftTop() {
         // Animate position div and it's clone so after flip the whole map is centered
-        gsap.to('#scene > div > div', {
+        gsap.to('#scene > .container > div', {
             left: 0,
             top: 0,
             duration: 1.5
         });
     },
     fadeIn(sheets) {
-        console.log(sheets);
         gsap.fromTo(sheets, { opacity: 0 }, {
             opacity: 1,
-            duration: 1
-            // duration: (index, target, targets) => 2 + index / targets.length + Math.random(),
-            // stagger: (index, target, targets) => (index + 2) / targets.length,
-            //     repeat: -1,
-            //     yoyo: true,
-            //     repeatDelay: 2 + step,
+            duration: .25,
+            stagger: .05,
         })
     },
     colorize(sheets) {

@@ -16,17 +16,9 @@ sheetAnims.colorizeWait(document.querySelector('.sheet'))
  * The clone lies on top of the original
  */
 function wrapDivWithClone() {
-    let level = 0;
-
     // Select the highest level container
-    let currentContainer = document.querySelector('#scene > .container');
-    console.log(currentContainer);
-    if (!currentContainer) {
-        currentContainer = document.querySelector('#scene > .sheet');
-    } else {
-        // Increment data-level attribute
-        level = parseInt(currentContainer.getAttribute('data-level')) + 1;
-    }
+    const currentContainer = document.querySelector('#scene > .container');
+    const level = parseInt(currentContainer.getAttribute('data-level')) + 1;
 
     // Create new container
     const newContainer = document.createElement('div');
@@ -40,20 +32,20 @@ function wrapDivWithClone() {
     // Twice as high or twice the width of current
     // adjust position el too, so it appears at the same place
     // Therefor it must be (absolutely) positioned
-    console.log(level);
     if (level % 2) {
-        newContainer.style.height = 2 * dim.height + "px";
-        newContainer.style.width = dim.width + "px";
-
-        currentContainer.style.top = (dim.height / 2) + "px"
-    } else {
         newContainer.style.width = 2 * dim.width + "px";
         newContainer.style.height = dim.height + "px";
 
         currentContainer.style.left = (dim.width / 2) + "px"
+    } else {
+        newContainer.style.height = 2 * dim.height + "px";
+        newContainer.style.width = dim.width + "px";
+
+        currentContainer.style.top = (dim.height / 2) + "px"
     }
 
-    newContainer.style.perspective = dim.width * 2 + "px";
+    // Adapt perspective, to level scaled down scene. It boils down to multipy with sqrt(2)
+    newContainer.style.perspective = Math.sqrt(dim.width * dim.height) * 2 + "px";
 
     newContainer.appendChild(currentContainer);
     scene.appendChild(newContainer);
