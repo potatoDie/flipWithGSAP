@@ -1,0 +1,43 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: white;
+    margin: 0;
+}
+
+.sheet {
+    position: absolute;
+    /* 
+    top: 0px;
+    left: 0px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    --sqrt2: 1.414;
+    --width: min(50vh, 50vw);
+    width: var(--width);
+    height: calc(var(--width) * var(--sqrt2));
+
+    font-family: sans-serif;
+    font-size: min(40vh, 40vw);
+}
+
+.sheet span {
+    transform: rotate(4deg);
+}
+
+.container[data-level] {
+    position: absolute;
+    /* transform-style: preserve-3d; */
+}
+
+#scene {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    perspective: 1000px;
+}
